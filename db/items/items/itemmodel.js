@@ -18,39 +18,56 @@ exports.GET_oneitem = (request, response) =>{ //hämta endast ett objekt
 
 exports.POST_item = (request, response) => {                     //funktion som låter oss lägga upp ett nytt objekt
 item.exists({ name: request.body.name }, (error, answer) => {
+    console.log(0);
+
     if(error){
+        console.log(1);
         return response.status(500).json(error)
-    }else {
-        if(answer){
-            return response.status(400).json({
-                statuscode: 400,
-                status:false,
-                message: 'The object is already in the database'
-            })
-        }
-        const NEWitem = new item ({                   //produkten som skapas efter en post. En ny instans skapas
-            name: request.body.name,
-            description: request.body.description,
-            price: request.body.price,
-            img: request.body.img
-        })
-        NEWitem.save()
-        .then(()=>{
-            response.status(201).json({
-                statuscode:201,
-                status:true,
-                message: 'Object successfully posted'
-            })
-        })
-        .catch(()=>{
-            response.status(500).json({
-                statusCode: 500,
-                status: false,
-                message: 'failed to post item'
-            }
-            )
+    }
+
+    if(answer){
+        console.log(2);
+
+        return response.status(400).json({
+            statuscode: 400,
+            status:false,
+            message: 'The object is already in the database'
         })
     }
+
+    console.log(3);
+
+
+    const NEWitem = new item({                   //produkten som skapas efter en post. En ny instans skapas
+        _id: new mongoose.Types.ObjectId,
+        name: request.body.name,
+        description: request.body.description,
+        price: request.body.price,
+        img: request.body.img
+    })
+
+    NEWitem.save()
+    .then(()=>{
+        console.log(4);
+
+        response.status(201).json({
+            statuscode:201,
+            status:true,
+            message: 'Object successfully posted'
+        })
+    })
+    .catch((err)=>{
+        console.log(5);
+
+        response.status(500).json({
+            statusCode: 500,
+            status: false,
+            message: 'failed to post item',
+            err
+        }
+        )
+    })
+    
 
 })
 }
