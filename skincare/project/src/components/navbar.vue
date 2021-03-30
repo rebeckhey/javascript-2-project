@@ -7,16 +7,36 @@
     <router-link class=" home navbar-link  gradient-custom" to="/" exact>Home</router-link>
     <router-link class="about navbar-link gradient-custom" to="/about" exact>about</router-link>
     <router-link class="products navbar-link gradient-custom " to="/products" exact>Products</router-link>
-    <router-link class="cart navbar-link gradient-custom " to="/cart" exact><i class="fas fa-shopping-cart"></i></router-link>
+    
  
+  
+
+<!-- Default dropleft button -->
+<div class="dropleft">
+  <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-shopping-cart gradient-custom cart"><span class="badge rounded-pill badge-notification">1</span></i>
+  </a>
+  <div class="p-4 dropdown-menu">
+<h2 class="shoppingcart gradient-custom text-center">SHOPPINGCART</h2>
+
+ <shopCartCard/>
+    <router-link  class="cartlink btn" to="/cart" exact>Go to cart</router-link>
+    
+  </div>
+</div>
+
+
   </div>
 </nav>
   
 </template>
 
 <script>
+import shopCartCard from '../views/shopCartCard'
 export default {
-
+components:{
+  shopCartCard
+}
 }
 </script>
 
@@ -26,7 +46,7 @@ export default {
     font-size: 2.3rem;
     
 }
-span{
+.logo span{
     font-size: 1.5rem;
 }
 .gradient-custom {
@@ -54,4 +74,15 @@ span{
   background-clip: text;
   -webkit-text-fill-color: transparent; 
 }
+.cart{
+  font-size: 1.6rem;
+}
+.cart span{
+  font-size: 1rem;
+}
+.cartlink:hover{
+opacity: 50%;
+}
+
+
 </style>
