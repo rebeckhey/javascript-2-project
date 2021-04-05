@@ -45,7 +45,7 @@ methods:{
       this.show = true;
       setTimeout(() => {
         this.show = !this.show;
-      }, 1000);}
+      }, 700);}
 },
 
 created(){

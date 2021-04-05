@@ -16,6 +16,13 @@ export default new Vuex.Store({
     items: state => state.items, //returnerar state.items
     item: state => state.item,
     CART: state => state.cart,
+    amountInCart: state => { //räknar ut totala antalet produkter
+      let amount = 0
+      state.cart.forEach(product => {amount += product.quantity})
+      return amount
+    },
+    
+ 
     
   },
   mutations: {
@@ -26,7 +33,14 @@ export default new Vuex.Store({
       state.item = item
     },
     TO_CART: (state, { item, quantity }) => {
-      state.cart.push({ item, quantity })
+      const existingProduct = state.cart.find(product =>product.item._id === item._id ) //kollar igenom alla products som ligger i varukorgen
+      if(existingProduct){
+        existingProduct.quantity += quantity //ny produkt ska inte läggas till om det redan finns en. endast kvantiteten som justeras
+      }
+      else{
+        state.cart.push({ item, quantity }) //om produkten inte redan finns i varukorgen läggs det till en ny.
+      }
+      
     },
     
   },
@@ -35,19 +49,12 @@ export default new Vuex.Store({
       const res = await axios.get('http://localhost:9090/api/items/') //hämtas från länken
       commit('SET_ITEMS', res.data) //funktion skapas, res.data innehåller alla hämtade objekt
     },
-    GET_ONE_ITEM: async ({ commit }, id) => {
+    GET_ONE_ITEM: async ({ commit }, id) => { //hämtar en post
       const res = await axios.get('http://localhost:9090/api/items/' + id)
       commit('SET_ONE_ITEM', res.data)
     },
     ITEM_TO_CART: ({ commit }, { item, quantity }) => {
       commit('TO_CART', { item, quantity })
     },
-    
-
-
-
   },
-
-  modules: {
-  }
 })

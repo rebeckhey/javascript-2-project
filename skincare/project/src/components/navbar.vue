@@ -19,6 +19,7 @@
 
       <!-- Default dropleft button -->
       <div class="dropleft">
+        
         <a 
           href="#"
           type="button"
@@ -28,17 +29,19 @@
          
         >
           <i class="fas fa-shopping-cart gradient-custom cart" 
-            ><span class="badge rounded-pill badge-notification">1</span></i
+            ><span class="badge rounded-pill badge-notification">{{ amountInCart }}</span></i
           >
         </a>
+        
         <div class="p-4 dropdown-menu whitearea" >
          
           <h2 class="shoppingcart gradient-custom text-center">SHOPPINGCART</h2>
 
           <shopCartCard />
-          
+         
        
         </div>
+         
       </div>
     </div>
   </nav>
@@ -46,9 +49,13 @@
 
 <script>
 import shopCartCard from "../views/shopCartCard";
+import { mapGetters } from "vuex";
 export default {
   components: {
     shopCartCard,
+  },
+  computed:{
+    ...mapGetters(['amountInCart'])
   },
  methods:{
  
@@ -103,7 +110,10 @@ export default {
 }
 
 .whitearea{
-  width: max-content !important;
-}
+width: max-content !important;
 
+}
+.badge{
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
 </style>
